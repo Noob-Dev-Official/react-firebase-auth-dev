@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/authContext';
+import Alert from '../components/Alert';
 
 const Parent = styled.div`
 	margin-top: 100px;
@@ -58,12 +59,16 @@ const SubmitBtn = styled(Input)`
 
 	&:hover {
 		cursor: pointer;
+		background-color: #d8d8d8;
 	}
 `;
 
 const SignUp = () => {
 	const [email, setEmail] = useState({ email: '' });
 	const [password, setPassword] = useState({ password: '' });
+	const [error, setError] = useState(false);
+	const [errorMssg, setErrorMssg] = useState('');
+	const [loading, setLoading] = useState(false);
 
 	const { signup } = useAuth();
 
@@ -85,14 +90,37 @@ const SignUp = () => {
 		});
 	};
 
-	const onFormSubmit = (e) => {
+	const onFormSubmit = async (e) => {
 		e.preventDefault();
 
-		signup(email, password);
+		if (confirmPasswordRef.current.value !== password) {
+			setError(true);
+			setErrorMssg('Passwords do not match!');
+			hideErrorMssg();
+			return 'incorrect password';
+		} else {
+			try {
+				setLoading(true);
+				await signup(email, password);
+			} catch (err) {
+				setErrorMssg(err);
+				console.log(err);
+				hideErrorMssg();
+			}
+		}
+
+		setLoading(false);
+	};
+
+	const hideErrorMssg = () => {
+		setTimeout(() => {
+			setError(false);
+		}, 5000);
 	};
 
 	return (
 		<>
+			{error && <Alert mssg={errorMssg} />}
 			<Parent>
 				<Heading>Sign Up</Heading>
 				<Form onSubmit={onFormSubmit}>
@@ -125,7 +153,12 @@ const SignUp = () => {
 							required
 						/>
 					</ConfirmPasswordDiv>
-					<SubmitBtn type='submit' name='submit' value='Enter' />
+					<SubmitBtn
+						disabled={loading}
+						type='submit'
+						name='submit'
+						value='Enter'
+					/>
 				</Form>
 				<p>
 					Already have an account?<Link to='/sign-in'>Sign In</Link>
