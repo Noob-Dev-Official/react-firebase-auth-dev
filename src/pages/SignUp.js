@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { AuthProvider, useAuth } from '../contexts/authContext';
+import { useAuth } from '../contexts/authContext';
 
 const Parent = styled.div`
 	margin-top: 100px;
@@ -93,46 +93,44 @@ const SignUp = () => {
 
 	return (
 		<>
-			<AuthProvider>
-				<Parent>
-					<Heading>Sign Up</Heading>
-					<Form onSubmit={onFormSubmit}>
-						<EmailDiv>
-							<Label>Email</Label>
-							<Input
-								type='text'
-								name='email'
-								value={email.email}
-								onChange={onEmailChange}
-								required
-							/>
-						</EmailDiv>
-						<PasswordDiv>
-							<Label>Password</Label>
-							<Input
-								type='password'
-								name='password'
-								value={password.password}
-								onChange={onPasswordChange}
-								required
-							/>
-						</PasswordDiv>
-						<ConfirmPasswordDiv>
-							<Label>Confirm Password</Label>
-							<Input
-								ref={confirmPasswordRef}
-								type='password'
-								name='password'
-								required
-							/>
-						</ConfirmPasswordDiv>
-						<SubmitBtn type='submit' name='submit' value='Enter' />
-					</Form>
-					<p>
-						Already have an account?<Link to='/sign-in'>Sign In</Link>
-					</p>
-				</Parent>
-			</AuthProvider>
+			<Parent>
+				<Heading>Sign Up</Heading>
+				<Form onSubmit={onFormSubmit}>
+					<EmailDiv>
+						<Label>Email</Label>
+						<Input
+							type='text'
+							name='email'
+							value={email.email}
+							onChange={onEmailChange}
+							required
+						/>
+					</EmailDiv>
+					<PasswordDiv>
+						<Label>Password</Label>
+						<Input
+							type='password'
+							name='password'
+							value={password.password}
+							onChange={onPasswordChange}
+							required
+						/>
+					</PasswordDiv>
+					<ConfirmPasswordDiv>
+						<Label>Confirm Password</Label>
+						<Input
+							ref={confirmPasswordRef}
+							type='password'
+							name='password'
+							required
+						/>
+					</ConfirmPasswordDiv>
+					<SubmitBtn type='submit' name='submit' value='Enter' />
+				</Form>
+				<p>
+					Already have an account?<Link to='/sign-in'>Sign In</Link>
+				</p>
+			</Parent>
 		</>
 	);
 };

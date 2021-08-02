@@ -1,26 +1,29 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
+import { AuthProvider } from './contexts/authContext';
 
 import './App.css';
 
 function App() {
 	return (
 		<>
-			<Router>
-				<div className='auth-app'>
-					<div className='content'>
-						<Switch>
-							<Route exact path='/sign-in'>
-								<SignIn />
-							</Route>
-							<Route exact path='/sign-up'>
-								<SignUp />
-							</Route>
-						</Switch>
+			<AuthProvider>
+				<Router>
+					<div className='auth-app'>
+						<div className='content'>
+							<Switch>
+								<Route exact path='/sign-in'>
+									<SignIn />
+								</Route>
+								<Route exact path='/sign-up'>
+									<SignUp />
+								</Route>
+							</Switch>
+						</div>
 					</div>
-				</div>
-			</Router>
+				</Router>
+			</AuthProvider>
 		</>
 	);
 }
