@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/authContext';
+import { useAuth } from '../contexts/AuthContext';
 import Alert from '../components/Alert';
+import Success from '../components/Success';
 
 const Parent = styled.div`
 	margin-top: 100px;
@@ -68,6 +69,8 @@ const SignUp = () => {
 	const [password, setPassword] = useState({ password: '' });
 	const [error, setError] = useState(false);
 	const [errorMssg, setErrorMssg] = useState('');
+	const [success, setSuccess] = useState(false);
+	const [successMssg, setSuccessMssg] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	const { signup } = useAuth();
@@ -93,15 +96,19 @@ const SignUp = () => {
 	const onFormSubmit = async (e) => {
 		e.preventDefault();
 
-		if (confirmPasswordRef.current.value !== password) {
+		if (confirmPasswordRef.current.value !== password.password) {
 			setError(true);
 			setErrorMssg('Passwords do not match!');
+			console.log(password);
+			console.log(confirmPasswordRef.current.value);
 			hideErrorMssg();
 			return 'incorrect password';
 		} else {
 			try {
 				setLoading(true);
-				await signup(email, password);
+				await signup(email.email, password.password);
+				setSuccessMssg(true);
+				setSuccessMssg('Sign Up successful!');
 			} catch (err) {
 				setErrorMssg(err);
 				console.log(err);
@@ -118,9 +125,16 @@ const SignUp = () => {
 		}, 5000);
 	};
 
+	const hideSuccessMssg = () => {
+		setTimeout(() => {
+			setSuccess(false);
+		}, 5000);
+	};
+
 	return (
 		<>
 			{error && <Alert mssg={errorMssg} />}
+			{success && <Success mssg={successMssg} />}
 			<Parent>
 				<Heading>Sign Up</Heading>
 				<Form onSubmit={onFormSubmit}>
