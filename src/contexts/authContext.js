@@ -15,9 +15,14 @@ export const AuthProvider = ({ children }) => {
 		auth.createUserWithEmailAndPassword(email, password);
 	};
 
+	const signin = (email, password) => {
+		auth.signInWithEmailAndPassword(email, password);
+	};
+
 	const value = {
 		currentUser,
 		signup,
+		signin,
 	};
 
 	useEffect(() => {
