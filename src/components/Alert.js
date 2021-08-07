@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const AlertDiv = styled.div`
 	border: 4px solid #d9004c;
 	margin: 45px 150px 0px 150px;
-	color: #000;
+	color: #970035;
 	padding: 10px 20px;
 	text-align: center;
 	justify-content: center;

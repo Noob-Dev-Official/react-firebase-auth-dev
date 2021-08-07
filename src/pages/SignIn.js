@@ -51,10 +51,6 @@ const PasswordDiv = styled.div`
 	margin-top: 20px;
 `;
 
-const ConfirmPasswordDiv = styled.div`
-	margin-top: 20px;
-`;
-
 const SubmitBtn = styled(Input)`
 	margin-top: 30px;
 
@@ -95,17 +91,20 @@ const SignIn = () => {
 		e.preventDefault();
 
 		try {
-			setError(false);
+			// setError(false);
 			setLoading(true);
 			await signin(email.email, password.password);
+			console.log('try');
 			// setSuccessMssg(true);
 			// setSuccessMssg('Sign Up successful!');
-		} catch (err) {
+		} catch {
+			setError(true);
+			console.log('error');
 			setErrorMssg('Cannot Sign In');
-			console.log(err);
+			// console.log(err);
 			// hideErrorMssg();
 		}
-
+		console.log('outside error');
 		setLoading(false);
 	};
 

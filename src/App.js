@@ -8,10 +8,10 @@ import './App.css';
 function App() {
 	return (
 		<>
-			<AuthProvider>
-				<Router>
-					<div className='auth-app'>
-						<div className='content'>
+			<Router>
+				<div className='auth-app'>
+					<div className='content'>
+						<AuthProvider>
 							<Switch>
 								<Route exact path='/sign-in'>
 									<SignIn />
@@ -20,10 +20,10 @@ function App() {
 									<SignUp />
 								</Route>
 							</Switch>
-						</div>
+						</AuthProvider>
 					</div>
-				</Router>
-			</AuthProvider>
+				</div>
+			</Router>
 		</>
 	);
 }
