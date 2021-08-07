@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Alert from '../components/Alert';
-import Success from '../components/Success';
 
 const Parent = styled.div`
 	margin-top: 100px;
@@ -11,6 +10,7 @@ const Parent = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	color: #1e1e1e;
 
 	& p {
 		margin-top: 15px;
@@ -65,9 +65,8 @@ const SignIn = () => {
 	const [password, setPassword] = useState({ password: '' });
 	const [error, setError] = useState(false);
 	const [errorMssg, setErrorMssg] = useState('');
-	const [success, setSuccess] = useState(false);
-	const [successMssg, setSuccessMssg] = useState('');
 	const [loading, setLoading] = useState(false);
+	const history = useHistory();
 
 	const { signin } = useAuth();
 
@@ -91,18 +90,15 @@ const SignIn = () => {
 		e.preventDefault();
 
 		try {
-			// setError(false);
+			setError(false);
 			setLoading(true);
 			await signin(email.email, password.password);
-			console.log('try');
-			// setSuccessMssg(true);
-			// setSuccessMssg('Sign Up successful!');
-		} catch {
+			history.push('/');
+		} catch (err) {
 			setError(true);
-			console.log('error');
 			setErrorMssg('Cannot Sign In');
-			// console.log(err);
-			// hideErrorMssg();
+			console.log(err);
+			hideErrorMssg();
 		}
 		console.log('outside error');
 		setLoading(false);
@@ -114,16 +110,9 @@ const SignIn = () => {
 		}, 5000);
 	};
 
-	const hideSuccessMssg = () => {
-		setTimeout(() => {
-			setSuccess(false);
-		}, 5000);
-	};
-
 	return (
 		<>
 			{error && <Alert mssg={errorMssg} />}
-			{/* {success && <Success mssg={successMssg} />} */}
 			<Parent>
 				<Heading>Sign In</Heading>
 				<Form onSubmit={onFormSubmit}>

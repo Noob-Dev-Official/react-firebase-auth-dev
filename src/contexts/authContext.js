@@ -19,10 +19,15 @@ export const AuthProvider = ({ children }) => {
 		return auth.signInWithEmailAndPassword(email, password);
 	};
 
+	const signout = () => {
+		return auth.signOut();
+	};
+
 	const value = {
 		currentUser,
 		signup,
 		signin,
+		signout,
 	};
 
 	useEffect(() => {

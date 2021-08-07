@@ -11,6 +11,7 @@ const Parent = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	color: #1e1e1e;
 
 	& p {
 		margin-top: 15px;
