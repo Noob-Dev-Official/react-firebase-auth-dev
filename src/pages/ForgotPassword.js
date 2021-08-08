@@ -1,83 +1,62 @@
 import React, { useState } from 'react';
 
-import styled from 'styled-components';
+import { Link, useHistory } from 'react-router-dom';
+
 import { useAuth } from '../contexts/AuthContext';
-
-const Parent = styled.div`
-	margin-top: 100px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	color: #1e1e1e;
-
-	& p {
-		margin-top: 15px;
-	}
-
-	& a {
-		text-decoration: none;
-		color: #006ee5;
-
-		&:visited {
-			color: #006ee5;
-			text-decoration: none;
-		}
-
-		&:hover {
-			text-decoration: underline;
-			color: #006ee5;
-		}
-	}
-`;
-
-const Heading = styled.h1`
-	display: block;
-	padding: 0px auto;
-`;
-
-const Form = styled.form`
-	padding: 50px 20px;
-	border: 1px solid #999999;
-	margin-top: 40px;
-	border-radius: 10px;
-	max-width: 400px;
-	margin: 20px;
-`;
-
-const Label = styled.label`
-	font-size: 1.1rem;
-`;
-
-const Input = styled.input`
-	display: block;
-	padding: 8px 5px;
-	width: 300px;
-	font-size: 1rem;
-	border-radius: 5px;
-	border: 1px solid #999999;
-	margin-top: 8px;
-`;
-
-const EmailDiv = styled.div``;
-
-const PasswordDiv = styled.div`
-	margin-top: 20px;
-`;
-
-const SubmitBtn = styled(Input)`
-	margin-top: 30px;
-
-	&:hover {
-		cursor: pointer;
-		background-color: #d8d8d8;
-	}
-`;
+import {
+	AuthFormParent,
+	AuthFormHeading,
+	AuthForm,
+	AuthFormLabel,
+	AuthFormInput,
+	AuthFormEmailDiv,
+	AuthFormSubmitBtn,
+	AuthFormBottomText,
+} from '../components/AuthFormComponents';
 
 const ForgotPassword = () => {
+	const [email, setEmail] = useState({ email: '' });
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
+	const [errorMssg, setErrorMssg] = useState('');
+
+	const onEmailChange = (e) => {
+		setEmail(() => {
+			return {
+				[e.target.name]: e.target.value,
+			};
+		});
+	};
+
 	return (
 		<>
-			<h2>hello</h2>
+			<AuthFormParent>
+				<AuthFormHeading>Reset Password</AuthFormHeading>
+				<AuthForm>
+					<AuthFormEmailDiv>
+						<AuthFormLabel>Email</AuthFormLabel>
+						<AuthFormInput
+							type='text'
+							name='email'
+							value={email.email}
+							onChange={onEmailChange}
+							required
+						/>
+					</AuthFormEmailDiv>
+					<AuthFormSubmitBtn
+						disabled={loading}
+						type='submit'
+						name='submit'
+						value='Reset Password'
+					/>
+					<p className='forgot-password-sign-in'>
+						<Link to='/sign-in'>Sign In</Link>
+					</p>
+				</AuthForm>
+			</AuthFormParent>
+			<AuthFormBottomText>
+				Need an account?<Link to='/sign-up'> Sign Up</Link>
+			</AuthFormBottomText>
 		</>
 	);
 };

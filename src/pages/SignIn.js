@@ -13,6 +13,7 @@ import {
 	AuthFormEmailDiv,
 	AuthFormPasswordDiv,
 	AuthFormSubmitBtn,
+	AuthFormBottomText,
 } from '../components/AuthFormComponents';
 
 const SignIn = () => {
@@ -101,10 +102,10 @@ const SignIn = () => {
 				<p>
 					Need an account?<Link to='/sign-up'> Sign Up</Link>
 				</p>
-				<p>
-					Forgot password?<Link to='/forgot-password'> Click Here</Link>
-				</p>
 			</AuthFormParent>
+			<AuthFormBottomText>
+				Forgot password?<Link to='/forgot-password'> Click Here</Link>
+			</AuthFormBottomText>
 		</>
 	);
 };

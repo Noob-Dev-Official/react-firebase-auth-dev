@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 
 export const AuthFormParent = styled.div`
-	margin-top: 100px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	color: #1e1e1e;
+	border: 1px solid #999999;
+	border-radius: 10px;
+	max-width: 500px;
+	padding: 30px 20px;
+	margin: auto;
+	margin-top: 100px;
 
 	& p {
 		margin-top: 15px;
@@ -26,20 +31,27 @@ export const AuthFormParent = styled.div`
 			color: #006ee5;
 		}
 	}
+
+	.forgot-password-sign-in {
+		margin-top: 40px;
+	}
+`;
+
+export const AuthForm = styled.form`
+	margin-top: 40px;
+	max-width: 400px;
+	margin: 20px;
+	display: flex;
+	flex-direction: column;
+
+	& p {
+		text-align: center;
+	}
 `;
 
 export const AuthFormHeading = styled.h1`
 	display: block;
 	padding: 0px auto;
-`;
-
-export const AuthForm = styled.form`
-	padding: 50px 20px;
-	border: 1px solid #999999;
-	margin-top: 40px;
-	border-radius: 10px;
-	max-width: 400px;
-	margin: 20px;
 `;
 
 export const AuthFormLabel = styled.label`
@@ -64,9 +76,33 @@ export const AuthFormPasswordDiv = styled.div`
 
 export const AuthFormSubmitBtn = styled(AuthFormInput)`
 	margin-top: 30px;
+	background-color: #006ee5;
+	border-color: #006ee5;
+	color: #fff;
+	padding: 10px 20px;
 
 	&:hover {
 		cursor: pointer;
-		background-color: #d8d8d8;
+		background-color: #0058b7;
+	}
+`;
+
+export const AuthFormBottomText = styled.p`
+	text-align: center;
+	margin-top: 25px;
+
+	& a {
+		text-decoration: none;
+		color: #006ee5;
+
+		&:visited {
+			color: #006ee5;
+			text-decoration: none;
+		}
+
+		&:hover {
+			text-decoration: underline;
+			color: #006ee5;
+		}
 	}
 `;
