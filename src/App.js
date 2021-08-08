@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import ForgotPassword from './pages/ForgotPassword';
 
 import './App.css';
 
@@ -22,6 +23,9 @@ function App() {
 								</Route>
 								<Route exact path='/sign-up'>
 									<SignUp />
+								</Route>
+								<Route exact path='/forgot-password'>
+									<ForgotPassword />
 								</Route>
 							</Switch>
 						</AuthProvider>
