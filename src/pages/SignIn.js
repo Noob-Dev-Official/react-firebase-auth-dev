@@ -15,6 +15,21 @@ const Parent = styled.div`
 	& p {
 		margin-top: 15px;
 	}
+
+	& a {
+		text-decoration: none;
+		color: #006ee5;
+
+		&:visited {
+			color: #006ee5;
+			text-decoration: none;
+		}
+
+		&:hover {
+			text-decoration: underline;
+			color: #006ee5;
+		}
+	}
 `;
 
 const Heading = styled.h1`
@@ -145,6 +160,9 @@ const SignIn = () => {
 				</Form>
 				<p>
 					Need an account?<Link to='/sign-up'>Sign Up</Link>
+				</p>
+				<p>
+					Forgot password?<Link to='/forgot-password'>Click Here</Link>
 				</p>
 			</Parent>
 		</>

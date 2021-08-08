@@ -16,6 +16,21 @@ const Parent = styled.div`
 	& p {
 		margin-top: 15px;
 	}
+
+	& a {
+		text-decoration: none;
+		color: #006ee5;
+
+		&:visited {
+			color: #006ee5;
+			text-decoration: none;
+		}
+
+		&:hover {
+			text-decoration: underline;
+			color: #006ee5;
+		}
+	}
 `;
 
 const Heading = styled.h1`
