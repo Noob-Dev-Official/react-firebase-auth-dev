@@ -49,18 +49,25 @@ const SignUp = () => {
 		e.preventDefault();
 
 		if (confirmPasswordRef.current.value !== password.password) {
+			setPassword({ password: '' });
+			confirmPasswordRef.current.value = '';
+
 			setError(true);
 			setErrorMssg('Passwords do not match!');
-			console.log(password);
-			console.log(confirmPasswordRef.current.value);
+
 			hideErrorMssg();
 			return 'incorrect password';
 		} else {
 			try {
 				setLoading(true);
+				setError(false);
+				setSuccess(false);
+
 				await signup(email.email, password.password);
+
 				setSuccessMssg(true);
 				setSuccessMssg('Sign Up successful!');
+				hideSuccessMssg();
 			} catch (err) {
 				setErrorMssg(err);
 				console.log(err);

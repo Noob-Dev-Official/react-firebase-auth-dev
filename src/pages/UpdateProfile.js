@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { Link, useHistory } from 'react-router-dom';
 
 import { useAuth } from '../contexts/AuthContext';
 import Alert from '../components/Alert';
+import Success from '../components/Success';
 import {
 	AuthFormParent,
 	AuthFormHeading,
@@ -16,16 +17,20 @@ import {
 	AuthFormBottomText,
 } from '../components/AuthFormComponents';
 
-const SignIn = () => {
+const UpdateProfile = () => {
 	const [email, setEmail] = useState({ email: '' });
 	const [password, setPassword] = useState({ password: '' });
 	const [error, setError] = useState(false);
 	const [errorMssg, setErrorMssg] = useState('');
+	const [success, setSuccess] = useState(false);
+	const [successMssg, setSuccessMssg] = useState('');
 	const [loading, setLoading] = useState(false);
+
+	const { currentUser, updateEmail, updatePassword } = useAuth();
 
 	const history = useHistory();
 
-	const { signin } = useAuth();
+	const confirmPasswordRef = useRef();
 
 	const onEmailChange = (e) => {
 		setEmail(() => {
@@ -43,20 +48,44 @@ const SignIn = () => {
 		});
 	};
 
-	const onFormSubmit = async (e) => {
+	const onFormSubmit = (e) => {
 		e.preventDefault();
 
-		try {
-			setError(false);
-			setLoading(true);
+		if (confirmPasswordRef.current.value !== password.password) {
+			setPassword({ password: '' });
+			confirmPasswordRef.current.value = '';
 
-			await signin(email.email, password.password);
-			history.push('/');
-		} catch (err) {
 			setError(true);
-			setErrorMssg('Cannot Sign In');
-			console.log(err);
+			setErrorMssg('Passwords do not match!');
+
 			hideErrorMssg();
+			return 'incorrect password';
+		} else {
+			const promises = [];
+			setLoading(true);
+			setError(false);
+			setSuccess(false);
+
+			if (email.email && email.email !== currentUser.email) {
+				promises.push(updateEmail(email.email));
+			}
+
+			if (password.password) {
+				promises.push(updatePassword(password.password));
+			}
+
+			Promise.all(promises)
+				.then(() => {
+					history.push('/');
+				})
+				.catch((err) => {
+					setErrorMssg(err);
+					console.log(err);
+					hideErrorMssg();
+				})
+				.finally(() => {
+					setLoading(false);
+				});
 		}
 
 		setLoading(false);
@@ -69,11 +98,18 @@ const SignIn = () => {
 		}, 5000);
 	};
 
+	const hideSuccessMssg = () => {
+		setTimeout(() => {
+			setSuccess(false);
+		}, 5000);
+	};
+
 	return (
 		<>
 			{error && <Alert mssg={errorMssg} />}
+			{success && <Success mssg={successMssg} />}
 			<AuthFormParent>
-				<AuthFormHeading>Sign In</AuthFormHeading>
+				<AuthFormHeading>Update Profile</AuthFormHeading>
 				<AuthForm onSubmit={onFormSubmit}>
 					<AuthFormEmailDiv>
 						<AuthFormLabel>Email</AuthFormLabel>
@@ -82,7 +118,6 @@ const SignIn = () => {
 							name='email'
 							value={email.email}
 							onChange={onEmailChange}
-							required
 						/>
 					</AuthFormEmailDiv>
 					<AuthFormPasswordDiv>
@@ -92,6 +127,14 @@ const SignIn = () => {
 							name='password'
 							value={password.password}
 							onChange={onPasswordChange}
+						/>
+					</AuthFormPasswordDiv>
+					<AuthFormPasswordDiv>
+						<AuthFormLabel>Confirm Password</AuthFormLabel>
+						<AuthFormInput
+							ref={confirmPasswordRef}
+							type='password'
+							name='password'
 							required
 						/>
 					</AuthFormPasswordDiv>
@@ -99,18 +142,22 @@ const SignIn = () => {
 						disabled={loading}
 						type='submit'
 						name='submit'
-						value='Sign In'
+						value='Update'
 					/>
 				</AuthForm>
-				<p>
-					Need an account?<Link to='/sign-up'> Sign Up</Link>
-				</p>
 			</AuthFormParent>
 			<AuthFormBottomText>
-				Forgot password?<Link to='/forgot-password'> Click Here</Link>
+				<Link
+					style={{
+						color: '#D9004C',
+					}}
+					to='/'
+				>
+					Cancel
+				</Link>
 			</AuthFormBottomText>
 		</>
 	);
 };
 
-export default SignIn;
+export default UpdateProfile;
