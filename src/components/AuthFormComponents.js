@@ -80,6 +80,8 @@ export const AuthFormSubmitBtn = styled(AuthFormInput)`
 	border-color: #006ee5;
 	color: #fff;
 	padding: 10px 20px;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
 	&:hover {
 		cursor: pointer;

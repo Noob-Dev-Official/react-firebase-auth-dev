@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useAuth } from '../contexts/AuthContext';
 import Alert from '../components/Alert';
@@ -14,14 +14,15 @@ import {
 	AuthFormSubmitBtn,
 	AuthFormBottomText,
 } from '../components/AuthFormComponents';
+import Success from '../components/Success';
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState({ email: '' });
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
+	const [success, setSuccess] = useState(false);
 	const [errorMssg, setErrorMssg] = useState('');
-
-	const history = useHistory();
+	const [successMssg, setSuccessMssg] = useState('');
 
 	const { resetPassword } = useAuth();
 
@@ -40,7 +41,10 @@ const ForgotPassword = () => {
 			setError(false);
 			setLoading(true);
 			await resetPassword(email.email);
-			history.push('/');
+
+			setSuccess(true);
+			setSuccessMssg('Check your inbox for further instruction.');
+			hideSuccessMssg();
 		} catch (err) {
 			setError(true);
 			setErrorMssg('Failed to reset password');
@@ -54,12 +58,21 @@ const ForgotPassword = () => {
 	const hideErrorMssg = () => {
 		setTimeout(() => {
 			setError(false);
+			setErrorMssg('');
+		}, 5000);
+	};
+
+	const hideSuccessMssg = () => {
+		setTimeout(() => {
+			setSuccess(false);
+			setSuccessMssg('');
 		}, 5000);
 	};
 
 	return (
 		<>
 			{error && <Alert mssg={errorMssg} />}
+			{success && <Success mssg={successMssg} />}
 			<AuthFormParent>
 				<AuthFormHeading>Reset Password</AuthFormHeading>
 				<AuthForm onSubmit={onFormSubmit}>

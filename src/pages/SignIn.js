@@ -64,6 +64,7 @@ const SignIn = () => {
 	const hideErrorMssg = () => {
 		setTimeout(() => {
 			setError(false);
+			setErrorMssg('');
 		}, 5000);
 	};
 

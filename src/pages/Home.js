@@ -41,9 +41,10 @@ const HomeStyle = styled.div`
 			box-shadow: none;
 			text-decoration: none;
 
-			/* &:visited {
-            color: #fff
-         } */
+			&:hover {
+				cursor: pointer;
+				background-color: #0058b7;
+			}
 		}
 	}
 

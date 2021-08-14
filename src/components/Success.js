@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const SuccessDiv = styled.div`
 	border: 4px solid #198754;
 	margin: 45px 150px 0px 150px;
-	color: #000;
+	color: #115e3a;
 	padding: 10px 20px;
 	text-align: center;
 	justify-content: center;
