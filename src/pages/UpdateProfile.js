@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { useAuth } from '../contexts/AuthContext';
 import Alert from '../components/Alert';
-import Success from '../components/Success';
 import {
 	AuthFormParent,
 	AuthFormHeading,
@@ -22,8 +21,6 @@ const UpdateProfile = () => {
 	const [password, setPassword] = useState({ password: '' });
 	const [error, setError] = useState(false);
 	const [errorMssg, setErrorMssg] = useState('');
-	const [success, setSuccess] = useState(false);
-	const [successMssg, setSuccessMssg] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	const { currentUser, updateEmail, updatePassword } = useAuth();
@@ -64,7 +61,6 @@ const UpdateProfile = () => {
 			const promises = [];
 			setLoading(true);
 			setError(false);
-			setSuccess(false);
 
 			if (email.email && email.email !== currentUser.email) {
 				promises.push(updateEmail(email.email));
@@ -98,16 +94,9 @@ const UpdateProfile = () => {
 		}, 5000);
 	};
 
-	const hideSuccessMssg = () => {
-		setTimeout(() => {
-			setSuccess(false);
-		}, 5000);
-	};
-
 	return (
 		<>
 			{error && <Alert mssg={errorMssg} />}
-			{success && <Success mssg={successMssg} />}
 			<AuthFormParent>
 				<AuthFormHeading>Update Profile</AuthFormHeading>
 				<AuthForm onSubmit={onFormSubmit}>
