@@ -15,7 +15,7 @@ The react firebase app is compatible to versions lower than v9.
 7. Getting current user info
 
 # Note:
-- v9 has a little update. In firebase.js, make sure to use the following imports in line 1 and 2:
+- v9 has a little update. In `src/firebase.js`, make sure to use the following imports in line 1 and 2:
 
 ```js
 import firebase from 'firebase/compat/app';
